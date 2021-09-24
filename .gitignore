@@ -1,0 +1,67 @@
+# Project exclude paths
+/.gradle/
+/Contacts/task/build/
+/Contacts/task/out/
+/Contacts/task/out/production/classes/
+/Topics/Errors in programs/Theory/out/
+/Topics/Errors in programs/Theory/out/production/classes/
+/Topics/Getters and setters/Account/out/
+/Topics/Getters and setters/Account/out/production/classes/
+/Topics/Getters and setters/Book/out/
+/Topics/Getters and setters/Book/out/production/classes/
+/Topics/Getters and setters/Complex/out/
+/Topics/Getters and setters/Complex/out/production/classes/
+/Topics/Getters and setters/Getting the fullname/out/
+/Topics/Getters and setters/Getting the fullname/out/production/classes/
+/Topics/Getters and setters/Theory/out/
+/Topics/Getters and setters/Theory/out/production/classes/
+/Topics/Instance methods/Counter/out/
+/Topics/Instance methods/Counter/out/production/classes/
+/Topics/Instance methods/Theory/out/
+/Topics/Instance methods/Theory/out/production/classes/
+/Topics/Introduction to generic programming/Correct the program/out/
+/Topics/Introduction to generic programming/Correct the program/out/production/classes/
+/Topics/Introduction to generic programming/Theory/out/
+/Topics/Introduction to generic programming/Theory/out/production/classes/
+/Topics/NPE/Avoid NPE/out/
+/Topics/NPE/Avoid NPE/out/production/classes/
+/Topics/NPE/Avoid NPE with strings/out/
+/Topics/NPE/Avoid NPE with strings/out/production/classes/
+/Topics/NPE/Theory/out/
+/Topics/NPE/Theory/out/production/classes/
+/Topics/NPE/Unknown input/out/
+/Topics/NPE/Unknown input/out/production/classes/
+/Topics/Package/Binary search/out/
+/Topics/Package/Binary search/out/production/classes/
+/Topics/Package/Getting input/out/
+/Topics/Package/Getting input/out/production/classes/
+/Topics/Package/Theory/out/
+/Topics/Package/Theory/out/production/classes/
+/Topics/Relational operators/Boys in a sport class/out/
+/Topics/Relational operators/Boys in a sport class/out/production/classes/
+/Topics/Relational operators/Check the given numbers are different/out/
+/Topics/Relational operators/Check the given numbers are different/out/production/classes/
+/Topics/Relational operators/Check the sum/out/
+/Topics/Relational operators/Check the sum/out/production/classes/
+/Topics/Relational operators/Check the value/out/
+/Topics/Relational operators/Check the value/out/production/classes/
+/Topics/Relational operators/Check the value (1)/out/
+/Topics/Relational operators/Check the value (1)/out/production/classes/
+/Topics/Relational operators/Exactly one parameter is positive/out/
+/Topics/Relational operators/Exactly one parameter is positive/out/production/classes/
+/Topics/Relational operators/Groundhogs at a party/out/
+/Topics/Relational operators/Groundhogs at a party/out/production/classes/
+/Topics/Relational operators/Is between/out/
+/Topics/Relational operators/Is between/out/production/classes/
+/Topics/Relational operators/Theory/out/
+/Topics/Relational operators/Theory/out/production/classes/
+/Topics/String/Check prefix ignoring the case/out/
+/Topics/String/Check prefix ignoring the case/out/production/classes/
+/Topics/String/Replacing 'a' with 'b'/out/
+/Topics/String/Replacing 'a' with 'b'/out/production/classes/
+/Topics/String/Theory/out/
+/Topics/String/Theory/out/production/classes/
+/Topics/The main method/Print  We are robots_/out/
+/Topics/The main method/Print  We are robots_/out/production/classes/
+/Topics/The main method/Theory/out/
+/Topics/The main method/Theory/out/production/classes/
