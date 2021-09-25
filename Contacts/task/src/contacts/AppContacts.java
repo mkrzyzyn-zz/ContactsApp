@@ -11,9 +11,10 @@ public class AppContacts {
 
         public Contact add(){
 
-                String name="";
-                String surname="";
-                String phoneNumber="";
+                String name;
+                String surname;
+                String phoneNumber;
+                Contact tempContact;
 
                 System.out.println("Enter the name of the person: ");
 
@@ -27,7 +28,11 @@ public class AppContacts {
 
                 phoneNumber = scanner.nextLine();
 
-                Contact contact = new Contact(name, surname, phoneNumber);
+                Contact contact = new Contact.Builder()
+                        .setName(name)
+                        .setSurname(surname)
+                        .setNumber(phoneNumber)
+                        .build();
 
                 System.out.println("A record created!\n" +
                         "A Phone Book with a single record created!");
@@ -69,6 +74,7 @@ public class AppContacts {
                                 Actions();
                                 break;
                         case "exit":
+                                System.exit(0);
                                 break;
 
                 }
@@ -102,6 +108,12 @@ public class AppContacts {
 
                 String record = scanner.nextLine();
 
+                if (record.matches("[a-zA-Z]+")) {
+
+                        System.out.println("No records to remove");
+                        System.exit(0);
+                }
+
                 int recordNumber = Integer.parseInt(record);
 
                 appContacts.remove(recordNumber-1);
@@ -112,21 +124,27 @@ public class AppContacts {
 
         public void edit() {
 
-                String tempName="";
-                String tempSurname="";
-                String tempNumber="";
+                String tempName;
+                String tempSurname;
+                String tempNumber;
 
                 System.out.println("Select a record: >");
 
                 String record = scanner.nextLine();
 
+                if (record.matches("[a-zA-Z]+")) {
+
+                        System.out.println("No records to edit");
+                        System.exit(0);
+                }
+
                 int recordNumber = Integer.parseInt(record);
 
-                Contact tempContact = appContacts.get(recordNumber-1);
-
+                Contact tempContact = appContacts.get(recordNumber - 1);
                 tempName = tempContact.getName();
                 tempSurname = tempContact.getSurname();
                 tempNumber = tempContact.getPhoneNumber();
+
 
                 System.out.println("Select a field (name, surname, number): >");
 
@@ -137,18 +155,27 @@ public class AppContacts {
                         case "name":
                                 System.out.println("Enter name: >");
                                 tempName = scanner.nextLine();
+                                tempContact.setName(tempName);
                                 break;
                         case "surname":
                                 System.out.println("Enter surname: >");
                                 tempSurname = scanner.nextLine();
+                                tempContact.setName(tempSurname);
                                 break;
                         case "number":
                                 System.out.println("Enter number: >");
                                 tempNumber = scanner.nextLine();
+                                tempContact.setPhoneNumber(tempNumber);
                                 break;
                 }
 
-                appContacts.set(recordNumber-1, new Contact(tempName, tempSurname, tempNumber));
+                        tempContact = new Contact.Builder()
+                        .setName(tempName)
+                        .setSurname(tempSurname)
+                        .setNumber(tempNumber)
+                        .build();
+
+                appContacts.set(recordNumber-1, tempContact);
 
 
         }
