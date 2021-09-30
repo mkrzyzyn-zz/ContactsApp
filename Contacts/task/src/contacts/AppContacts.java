@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 public class AppContacts {
 
-        ArrayList<Contact> addContacts = new  ArrayList<>();
+        ArrayList<Contact> addContacts = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-
 
         public void add(Boolean isPerson){
 
@@ -28,7 +27,7 @@ public class AppContacts {
 
                         surname = scanner.nextLine();
 
-                        System.out.println("Enter the birthdate: ");
+                        System.out.println("Enter the birthdate YYYY-MM-DD: ");
 
                         birthDate = scanner.nextLine();
 
@@ -53,6 +52,8 @@ public class AppContacts {
 
                         addContacts.add(person);
 
+
+
                 } else{
 
                         System.out.println("Enter the organization name: ");
@@ -73,10 +74,12 @@ public class AppContacts {
                                 .setPhoneNumber(phoneNumber)
                                 .build();
 
-
                         addContacts.add(org);
 
                         System.out.println("The record added.");
+
+                        System.out.println(org.getName());
+
                 }
 
 
@@ -173,6 +176,8 @@ public class AppContacts {
                 String tempName;
                 String tempSurname;
                 String tempNumber;
+                String tempBirthDate;
+                String tempGender;
 
                 System.out.println("Select a record: >");
 
@@ -186,11 +191,12 @@ public class AppContacts {
 
                 int recordNumber = Integer.parseInt(record);
 
-                Contact tempPerson = addContacts.get(recordNumber - 1);
+                Person tempPerson = (Person) addContacts.get(recordNumber - 1);
                 tempName = tempPerson.getName();
                 tempSurname = tempPerson.getSurname();
                 tempNumber = tempPerson.getPhoneNumber();
-
+                tempBirthDate = tempPerson.getBirthDate();
+                tempGender = tempPerson.getGender();
 
                 System.out.println("Select a field (name, surname, number): >");
 
@@ -218,6 +224,8 @@ public class AppContacts {
                         tempPerson = new Person.Builder()
                         .setName(tempName)
                         .setSurname(tempSurname)
+                                .setBirthDate(tempBirthDate)
+                                .setGender(tempGender)
                         .setPhoneNumber(tempNumber)
                         .build();
 

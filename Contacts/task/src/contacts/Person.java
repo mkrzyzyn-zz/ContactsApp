@@ -2,11 +2,33 @@ package contacts;
 
 public class Person extends Contact {
 
-    private String name;
     private String surname;
-    private String phoneNumber;
     private String birthDate;
     private String gender;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     @Override
     public String getDescription() {
@@ -39,21 +61,37 @@ public class Person extends Contact {
             return this;
         }
 
-        public String getbDate() {
+        public String getBirthDate() {
             return birthDate;
         }
 
         public Builder setBirthDate(String bDate) {
-            this.birthDate = bDate;
+
+            String regex = "\\d{4}-\\d{2}-\\d{2}";
+
+            if (bDate != null && bDate.matches(regex)) {
+                this.birthDate = bDate;
+            } else {
+                System.out.println("Bad birth date!");
+                this.birthDate = "[no data]";
+
+            }
             return this;
         }
-
         public String getGender() {
             return gender;
         }
 
         public Builder setGender(String gender) {
-            this.gender = gender;
+
+            String regex = "^(M|F){1}$";
+
+            if (gender != null && gender.matches(regex)) {
+                this.gender = gender;
+            } else {
+                System.out.println("Bad gender!");
+                this.gender = "[no data]";
+            }
             return this;
         }
 
@@ -68,7 +106,7 @@ public class Person extends Contact {
                     noParentheses + "|" +
                     firstGroupParentheses + "|" + secondGroupParentheses;
 
-            if (phoneNumber.matches(regex)) {
+            if (phoneNumber != null && phoneNumber.matches(regex)) {
                 this.number = phoneNumber;
             } else {
                 System.out.println("Wrong number format!");
@@ -79,10 +117,14 @@ public class Person extends Contact {
             return this;
         }
 
+
         public Person build() {
             return new Person(this);
         }
     }
+
+
+
 }
 
 
