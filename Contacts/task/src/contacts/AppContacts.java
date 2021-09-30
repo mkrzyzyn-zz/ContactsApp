@@ -5,60 +5,107 @@ import java.util.Scanner;
 
 public class AppContacts {
 
-        ArrayList<Contact> appContacts= new  ArrayList<>();
+        ArrayList<Contact> addContacts = new  ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
 
-        public Contact add(){
+        public void add(Boolean isPerson){
 
                 String name;
                 String surname;
                 String phoneNumber;
-                Contact tempContact;
+                String birthDate;
+                String gender;
+                String address;
 
-                System.out.println("Enter the name of the person: ");
+                if(isPerson) {
 
-                name = scanner.nextLine();
+                        System.out.println("Enter the name of the person: ");
 
-                System.out.println("Enter the surname of the person: ");
+                        name = scanner.nextLine();
 
-                surname = scanner.nextLine();
+                        System.out.println("Enter the surname of the person: ");
 
-                System.out.println("Enter the number: ");
+                        surname = scanner.nextLine();
 
-                phoneNumber = scanner.nextLine();
+                        System.out.println("Enter the birthdate: ");
 
-                Contact contact = new Contact.Builder()
-                        .setName(name)
-                        .setSurname(surname)
-                        .setNumber(phoneNumber)
-                        .build();
+                        birthDate = scanner.nextLine();
 
-                System.out.println("A record created!\n" +
-                        "A Phone Book with a single record created!");
+                        System.out.println("Enter the gender (M,F): ");
 
-                appContacts.add(contact);
+                        gender = scanner.nextLine();
 
-                return contact;
+                        System.out.println("Enter the number: ");
+
+                        phoneNumber = scanner.nextLine();
+
+                        Person person = new Person.Builder()
+                                .setName(name)
+                                .setSurname(surname)
+                                .setBirthDate(birthDate)
+                                .setGender(gender)
+                                .setPhoneNumber(phoneNumber)
+                                .build();
+
+                        System.out.println("A record created!\n" +
+                                "A Phone Book with a single record created!");
+
+                        addContacts.add(person);
+
+                } else{
+
+                        System.out.println("Enter the organization name: ");
+
+                        name = scanner.nextLine();
+
+                        System.out.println("Enter the address: ");
+
+                        address = scanner.nextLine();
+
+                        System.out.println("Enter the number: ");
+
+                        phoneNumber = scanner.nextLine();
+
+                        Organization org = new Organization.Builder()
+                                .setName(name)
+                                .setAddress(address)
+                                .setPhoneNumber(phoneNumber)
+                                .build();
+
+
+                        addContacts.add(org);
+
+                        System.out.println("The record added.");
+                }
+
 
         }
 
         public void Actions() {
 
                 String action;
+                String type;
+                Boolean isPerson;
 
-                System.out.println("Enter action (add, remove, edit, count, list, exit): ");
+                System.out.println("Enter action (add, remove, edit, count, info, exit): ");
 
                 action = scanner.nextLine();
 
                 switch (action) {
 
                         case "add":
-                                add();
+                                System.out.println("Enter the type (person, organization): ");
+                                type = scanner.nextLine();
+                                if(type.equals("person")){
+                                        add(true);
+                                }
+                                else if (type.equals("org")){
+                                        add(false);}
                                 Actions();
                                 break;
-                        case "list":
-                                list();
+                        case "info":
+                                info();
                                 Actions();
                                 break;
                         case "edit":
@@ -80,21 +127,20 @@ public class AppContacts {
                 }
         }
 
-        public void list() {
+        public void info() {
 
-                for(int i = 0; i<appContacts.size();i++){
+                for(int i = 0; i< addContacts.size(); i++){
 
-                        Contact temp = appContacts.get(i);
+                        Contact temp = addContacts.get(i);
 
-                        System.out.println(i + 1 + ". " + temp.getName() + " " + temp.getSurname()
-                                +", " + temp.getPhoneNumber());
+                        System.out.println(i + 1 + ". " + temp.getDescription());
                 }
 
         }
 
         public void count() {
 
-                System.out.println(appContacts.size() + " records");
+                System.out.println(addContacts.size() + " records");
 
 
 
@@ -102,7 +148,7 @@ public class AppContacts {
 
         public void remove(){
 
-                list();
+                info();
 
                 System.out.println("Select a record: >");
 
@@ -116,7 +162,7 @@ public class AppContacts {
 
                 int recordNumber = Integer.parseInt(record);
 
-                appContacts.remove(recordNumber-1);
+                addContacts.remove(recordNumber-1);
 
                 System.out.println("The record removed!");
 
@@ -140,10 +186,10 @@ public class AppContacts {
 
                 int recordNumber = Integer.parseInt(record);
 
-                Contact tempContact = appContacts.get(recordNumber - 1);
-                tempName = tempContact.getName();
-                tempSurname = tempContact.getSurname();
-                tempNumber = tempContact.getPhoneNumber();
+                Contact tempPerson = addContacts.get(recordNumber - 1);
+                tempName = tempPerson.getName();
+                tempSurname = tempPerson.getSurname();
+                tempNumber = tempPerson.getPhoneNumber();
 
 
                 System.out.println("Select a field (name, surname, number): >");
@@ -155,27 +201,27 @@ public class AppContacts {
                         case "name":
                                 System.out.println("Enter name: >");
                                 tempName = scanner.nextLine();
-                                tempContact.setName(tempName);
+                                tempPerson.setName(tempName);
                                 break;
                         case "surname":
                                 System.out.println("Enter surname: >");
                                 tempSurname = scanner.nextLine();
-                                tempContact.setName(tempSurname);
+                                tempPerson.setName(tempSurname);
                                 break;
                         case "number":
                                 System.out.println("Enter number: >");
                                 tempNumber = scanner.nextLine();
-                                tempContact.setPhoneNumber(tempNumber);
+                                tempPerson.setPhoneNumber(tempNumber);
                                 break;
                 }
 
-                        tempContact = new Contact.Builder()
+                        tempPerson = new Person.Builder()
                         .setName(tempName)
                         .setSurname(tempSurname)
-                        .setNumber(tempNumber)
+                        .setPhoneNumber(tempNumber)
                         .build();
 
-                appContacts.set(recordNumber-1, tempContact);
+                addContacts.set(recordNumber-1, tempPerson);
 
 
         }
