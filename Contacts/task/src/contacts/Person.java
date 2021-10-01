@@ -83,10 +83,11 @@ public class Person extends Contact {
 
             if (bDate != null && bDate.matches(regex)) {
                 this.birthDate = bDate;
-            } else {
+            } else if (!bDate.equals("[no data]")){
                 System.out.println("Bad birth date!");
                 this.birthDate = "[no data]";
-
+            } else {
+                this.birthDate = "[no data]";
             }
             return this;
         }
@@ -97,8 +98,10 @@ public class Person extends Contact {
 
             if (gender != null && gender.matches(regex)) {
                 this.gender = gender;
-            } else {
+            } else if (!gender.equals("[no data]")){
                 System.out.println("Bad gender!");
+                this.gender = "[no data]";
+            } else {
                 this.gender = "[no data]";
             }
             return this;
@@ -117,11 +120,11 @@ public class Person extends Contact {
 
             if (phoneNumber != null && phoneNumber.matches(regex)) {
                 this.number = phoneNumber;
-            } else {
+            } else if (!phoneNumber.equals("[no data]")){
                 System.out.println("Wrong number format!");
                 this.number = "[no number]";
-
-                // System.exit(0);
+            } else {
+                this.number = "[no data]";
             }
             return this;
         }

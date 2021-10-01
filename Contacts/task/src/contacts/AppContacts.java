@@ -271,6 +271,9 @@ public class AppContacts {
                                 .build();
 
                         addContacts.set(recordNumber - 1, tempPerson);
+
+                        System.out.println("\n");
+
                 }
                 else {
                         String tempName;
@@ -323,6 +326,8 @@ public class AppContacts {
                                 .build();
 
                         addContacts.set(recordNumber - 1, tempOrganization);
+
+                        System.out.println("\n");
 
 
                 }
