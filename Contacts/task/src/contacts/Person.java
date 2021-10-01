@@ -1,44 +1,20 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Person extends Contact {
+
+    ArrayList<Contact> addContacts = new ArrayList<>();
+    Scanner scanner = new Scanner(System.in);
 
     private String surname;
     private String birthDate;
     private String gender;
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    @Override
-    public String getDescription() {
-
-        return name + " " + surname;
-    }
-
-    private Person(Builder builder) {
+    Person(Builder builder) {
         this.name = builder.name;
         this.surname = builder.surname;
         this.phoneNumber = builder.number;
@@ -133,6 +109,174 @@ public class Person extends Contact {
             return new Person(this);
         }
     }
+
+    public Contact add() {
+
+        String name;
+        String surname;
+        String phoneNumber;
+        String birthDate;
+        String gender;
+        String address;
+
+        Person.Builder builderPerson = new Person.Builder();
+
+        System.out.println("Enter the name of the person: ");
+
+        name = scanner.nextLine();
+
+        System.out.println("Enter the surname of the person: ");
+
+        surname = scanner.nextLine();
+
+        System.out.println("Enter the birthdate: ");
+
+        birthDate = scanner.nextLine();
+
+        builderPerson.setBirthDate(birthDate);
+
+        System.out.println("Enter the gender (M, F): ");
+
+        gender = scanner.nextLine();
+
+        builderPerson.setGender(gender);
+
+        System.out.println("Enter the number: ");
+
+        phoneNumber = scanner.nextLine();
+
+        Person person = builderPerson
+                .setName(name)
+                .setSurname(surname)
+                .setPhoneNumber(phoneNumber)
+                .setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .build();
+
+        System.out.println("The record added. \n");
+
+        addContacts.add(person);
+
+        return person;
+
+    }
+
+    public Contact edit(){
+
+        int recordNumber = 1;
+
+        if (addContacts.size() > 1){
+
+            System.out.println("Select a record: >");
+
+            String record = scanner.nextLine();
+
+            if (record.matches("[a-zA-Z]+")) {
+
+                System.out.println("No records to edit");
+                System.exit(0);
+            }
+
+            recordNumber = Integer.parseInt(record);
+
+        }
+
+            String tempName;
+            String tempSurname;
+            String tempNumber;
+            String tempBirthDate;
+            String tempGender;
+
+            Person.Builder builderPerson = new Person.Builder();
+
+            tempName = this.getName();
+            tempSurname = this.getSurname();
+            tempNumber = this.getPhoneNumber();
+            tempBirthDate = this.getBirthDate();
+            tempGender = this.getGender();
+
+            System.out.println("Select a field (name, surname, birth, gender, number): >");
+
+            String fieldName = scanner.nextLine();
+
+            builderPerson
+                    .setName(tempName)
+                    .setSurname(tempSurname)
+                    .setBirthDate(tempBirthDate)
+                    .setGender(tempGender)
+                    .setPhoneNumber(tempNumber);
+
+            switch (fieldName) {
+
+                case "name":
+                    System.out.println("Enter name: >");
+                    tempName = scanner.nextLine();
+                    builderPerson.setName(tempName);
+                    break;
+                case "surname":
+                    System.out.println("Enter surname: >");
+                    tempSurname = scanner.nextLine();
+                    builderPerson.setName(tempSurname);
+                    break;
+                case "number":
+                    System.out.println("Enter number: >");
+                    tempNumber = scanner.nextLine();
+                    builderPerson.setPhoneNumber(tempNumber);
+                    break;
+                case "birth":
+                    System.out.println("Enter birth date: >");
+                    tempBirthDate = scanner.nextLine();
+                    builderPerson.setBirthDate(tempBirthDate);
+                    break;
+                case "gender":
+                    System.out.println("Enter gender: >");
+                    tempGender = scanner.nextLine();
+                    builderPerson.setGender(tempGender);
+                    break;
+            }
+
+            Person tempPerson = builderPerson
+                    .setModifiedAt(LocalDateTime.now())
+                    .build();
+
+            //addContacts.set(recordNumber - 1, tempPerson);
+
+            System.out.println("\n");
+
+            return tempPerson;
+
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String getDescription() {
+
+        return name + " " + surname;
+    }
+
 
     @Override
     public String toString() {
