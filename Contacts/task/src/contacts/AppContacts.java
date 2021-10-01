@@ -1,5 +1,9 @@
 package contacts;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +23,8 @@ public class AppContacts {
 
                 if(isPerson) {
 
+                        Person.Builder builderPerson = new Person.Builder();
+
                         System.out.println("Enter the name of the person: ");
 
                         name = scanner.nextLine();
@@ -27,34 +33,35 @@ public class AppContacts {
 
                         surname = scanner.nextLine();
 
-                        System.out.println("Enter the birthdate YYYY-MM-DD: ");
+                        System.out.println("Enter the birthdate: ");
 
                         birthDate = scanner.nextLine();
 
-                        System.out.println("Enter the gender (M,F): ");
+                        builderPerson.setBirthDate(birthDate);
+
+                        System.out.println("Enter the gender (M, F): ");
 
                         gender = scanner.nextLine();
+
+                        builderPerson.setGender(gender);
 
                         System.out.println("Enter the number: ");
 
                         phoneNumber = scanner.nextLine();
 
-                        Person person = new Person.Builder()
+                        Person person = builderPerson
                                 .setName(name)
                                 .setSurname(surname)
-                                .setBirthDate(birthDate)
-                                .setGender(gender)
                                 .setPhoneNumber(phoneNumber)
+                                .setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                                .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                                 .build();
 
-                        System.out.println("A record created!\n" +
-                                "A Phone Book with a single record created!");
+                        System.out.println("The record added. \n");
 
                         addContacts.add(person);
 
-
-
-                } else{
+                } else {
 
                         System.out.println("Enter the organization name: ");
 
@@ -72,11 +79,13 @@ public class AppContacts {
                                 .setName(name)
                                 .setAddress(address)
                                 .setPhoneNumber(phoneNumber)
+                                .setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                                .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
                                 .build();
 
                         addContacts.add(org);
 
-                        System.out.println("The record added.");
+                        System.out.println("The record added. \n");
 
                         System.out.println(org.getName());
 
@@ -101,10 +110,12 @@ public class AppContacts {
                                 System.out.println("Enter the type (person, organization): ");
                                 type = scanner.nextLine();
                                 if(type.equals("person")){
-                                        add(true);
+                                        isPerson = true;
+                                        add(isPerson);
                                 }
-                                else if (type.equals("org")){
-                                        add(false);}
+                                else if (type.equals("organization")){
+                                        isPerson = false;
+                                        add(isPerson);}
                                 Actions();
                                 break;
                         case "info":
@@ -132,12 +143,21 @@ public class AppContacts {
 
         public void info() {
 
+
+                int recordNum;
+
                 for(int i = 0; i< addContacts.size(); i++){
 
                         Contact temp = addContacts.get(i);
 
                         System.out.println(i + 1 + ". " + temp.getDescription());
                 }
+
+                System.out.println("Enter index to show info: ");
+
+                recordNum = Integer.parseInt(scanner.nextLine());
+
+                System.out.println(addContacts.get(recordNum-1).toString());
 
         }
 
@@ -151,7 +171,12 @@ public class AppContacts {
 
         public void remove(){
 
-                info();
+                for(int i = 0; i< addContacts.size(); i++){
+
+                        Contact temp = addContacts.get(i);
+
+                        System.out.println(i + 1 + ". " + temp.getDescription());
+                }
 
                 System.out.println("Select a record: >");
 
@@ -173,12 +198,6 @@ public class AppContacts {
 
         public void edit() {
 
-                String tempName;
-                String tempSurname;
-                String tempNumber;
-                String tempBirthDate;
-                String tempGender;
-
                 System.out.println("Select a record: >");
 
                 String record = scanner.nextLine();
@@ -191,46 +210,122 @@ public class AppContacts {
 
                 int recordNumber = Integer.parseInt(record);
 
-                Person tempPerson = (Person) addContacts.get(recordNumber - 1);
-                tempName = tempPerson.getName();
-                tempSurname = tempPerson.getSurname();
-                tempNumber = tempPerson.getPhoneNumber();
-                tempBirthDate = tempPerson.getBirthDate();
-                tempGender = tempPerson.getGender();
+                if(addContacts.get(recordNumber - 1) instanceof Person) {
 
-                System.out.println("Select a field (name, surname, number): >");
+                        String tempName;
+                        String tempSurname;
+                        String tempNumber;
+                        String tempBirthDate;
+                        String tempGender;
+                        Person.Builder builderPerson = new Person.Builder();
 
-                String fieldName = scanner.nextLine();
+                        Person tempPerson = (Person) addContacts.get(recordNumber - 1);
+                        tempName = tempPerson.getName();
+                        tempSurname = tempPerson.getSurname();
+                        tempNumber = tempPerson.getPhoneNumber();
+                        tempBirthDate = tempPerson.getBirthDate();
+                        tempGender = tempPerson.getGender();
 
-                switch(fieldName){
+                        System.out.println("Select a field (name, surname, birth, gender, number): >");
 
-                        case "name":
-                                System.out.println("Enter name: >");
-                                tempName = scanner.nextLine();
-                                tempPerson.setName(tempName);
-                                break;
-                        case "surname":
-                                System.out.println("Enter surname: >");
-                                tempSurname = scanner.nextLine();
-                                tempPerson.setName(tempSurname);
-                                break;
-                        case "number":
-                                System.out.println("Enter number: >");
-                                tempNumber = scanner.nextLine();
-                                tempPerson.setPhoneNumber(tempNumber);
-                                break;
-                }
+                        String fieldName = scanner.nextLine();
 
-                        tempPerson = new Person.Builder()
-                        .setName(tempName)
-                        .setSurname(tempSurname)
+                        builderPerson
+                                .setName(tempName)
+                                .setSurname(tempSurname)
                                 .setBirthDate(tempBirthDate)
                                 .setGender(tempGender)
-                        .setPhoneNumber(tempNumber)
-                        .build();
+                                .setPhoneNumber(tempNumber);
 
-                addContacts.set(recordNumber-1, tempPerson);
+                        switch (fieldName) {
 
+                                case "name":
+                                        System.out.println("Enter name: >");
+                                        tempName = scanner.nextLine();
+                                        builderPerson.setName(tempName);
+                                        break;
+                                case "surname":
+                                        System.out.println("Enter surname: >");
+                                        tempSurname = scanner.nextLine();
+                                        builderPerson.setName(tempSurname);
+                                        break;
+                                case "number":
+                                        System.out.println("Enter number: >");
+                                        tempNumber = scanner.nextLine();
+                                        builderPerson.setPhoneNumber(tempNumber);
+                                        break;
+                                case "birth":
+                                        System.out.println("Enter birth date: >");
+                                        tempBirthDate = scanner.nextLine();
+                                        builderPerson.setBirthDate(tempBirthDate);
+                                        break;
+                                case "gender":
+                                        System.out.println("Enter gender: >");
+                                        tempGender = scanner.nextLine();
+                                        builderPerson.setGender(tempGender);
+                                        break;
+                        }
+
+                        tempPerson = builderPerson
+                                .setModifiedAt(LocalDateTime.now())
+                                .build();
+
+                        addContacts.set(recordNumber - 1, tempPerson);
+                }
+                else {
+                        String tempName;
+                        String tempNumber;
+                        String tempAddress;
+                        LocalDateTime tempCreatedAt;
+
+                        Organization.Builder builderOrganization = new Organization.Builder();
+
+                        Organization tempOrganization = (Organization) addContacts.get(recordNumber - 1);
+
+                        tempName = tempOrganization.getName();
+                        tempNumber = tempOrganization.getPhoneNumber();
+                        tempAddress = tempOrganization.getAddress();
+                        tempCreatedAt = tempOrganization.getCreatedAt();
+
+                        System.out.println("Select a field (name, number, address): >");
+
+                        String fieldName = scanner.nextLine();
+
+                        builderOrganization
+                                .setName(tempName)
+                                .setAddress(tempAddress)
+                                .setPhoneNumber(tempNumber)
+                                .setCreatedAt(tempCreatedAt);
+
+
+                        switch (fieldName) {
+
+                                case "name":
+                                        System.out.println("Enter name: >");
+                                        tempName = scanner.nextLine();
+                                        builderOrganization.setName(tempName);
+                                        break;
+
+                                case "number":
+                                        System.out.println("Enter number: >");
+                                        tempNumber = scanner.nextLine();
+                                        builderOrganization.setPhoneNumber(tempNumber);
+                                        break;
+                                case "address":
+                                        System.out.println("Enter address: >");
+                                        tempAddress = scanner.nextLine();
+                                        builderOrganization.setAddress(tempAddress);
+                                        break;
+                        }
+
+                       tempOrganization = builderOrganization
+                               .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                                .build();
+
+                        addContacts.set(recordNumber - 1, tempOrganization);
+
+
+                }
 
         }
 

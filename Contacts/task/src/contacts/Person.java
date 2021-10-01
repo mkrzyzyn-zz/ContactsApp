@@ -1,5 +1,7 @@
 package contacts;
 
+import java.time.LocalDateTime;
+
 public class Person extends Contact {
 
     private String surname;
@@ -42,6 +44,8 @@ public class Person extends Contact {
         this.phoneNumber = builder.number;
         this.birthDate = builder.birthDate;
         this.gender = builder.gender;
+        this.createdAt = builder.createdAt;
+        this.modifiedAt = builder.modifiedAt;
     }
 
     public static class Builder {
@@ -50,6 +54,18 @@ public class Person extends Contact {
         private String number;
         private String birthDate;
         private String gender;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+
+        public Builder setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder setModifiedAt(LocalDateTime modifiedAt) {
+            this.modifiedAt = modifiedAt;
+            return this;
+        }
 
         public Builder setName(String name) {
             this.name = name;
@@ -59,10 +75,6 @@ public class Person extends Contact {
         public Builder setSurname(String surname) {
             this.surname = surname;
             return this;
-        }
-
-        public String getBirthDate() {
-            return birthDate;
         }
 
         public Builder setBirthDate(String bDate) {
@@ -77,9 +89,6 @@ public class Person extends Contact {
 
             }
             return this;
-        }
-        public String getGender() {
-            return gender;
         }
 
         public Builder setGender(String gender) {
@@ -117,12 +126,24 @@ public class Person extends Contact {
             return this;
         }
 
-
         public Person build() {
             return new Person(this);
         }
     }
 
+    @Override
+    public String toString() {
+        return
+                "Name: " + name + '\n' +
+                        "Surname: " + surname + '\n' +
+                        "Birth date: " + birthDate + '\n' +
+                        "Gender: " + gender + '\n' +
+                        "Number: " + phoneNumber + '\n' +
+                        "Time created: " + createdAt + '\n' +
+                        "Time last edit: " + modifiedAt + '\n'
+
+                ;
+    }
 
 
 }
