@@ -110,6 +110,12 @@ public class Person extends Contact {
         }
     }
 
+    public Boolean search(String query){
+        return this.name.toLowerCase().contains(query.toLowerCase())
+                || this.surname.toLowerCase().contains(query.toLowerCase())
+                || this.phoneNumber.toLowerCase().contains(query.toLowerCase());
+    }
+
     public Contact add() {
 
         String name;
@@ -117,7 +123,6 @@ public class Person extends Contact {
         String phoneNumber;
         String birthDate;
         String gender;
-        String address;
 
         Person.Builder builderPerson = new Person.Builder();
 
@@ -155,7 +160,6 @@ public class Person extends Contact {
 
         System.out.println("The record added. \n");
 
-        addContacts.add(person);
 
         return person;
 
