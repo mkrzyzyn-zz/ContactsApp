@@ -1,8 +1,14 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Organization extends Contact{
+
+    ArrayList<Contact> addContacts = new ArrayList<>();
+    Scanner scanner = new Scanner(System.in);
 
     @Override
     public String getDescription(){
@@ -17,6 +23,34 @@ public class Organization extends Contact{
         this.modifiedAt = builder.modifiedAt;
     }
 
+    public Contact add(){
+
+        System.out.println("Enter the organization name: ");
+
+        name = scanner.nextLine();
+
+        System.out.println("Enter the address: ");
+
+        address = scanner.nextLine();
+
+        System.out.println("Enter the number: ");
+
+        phoneNumber = scanner.nextLine();
+
+        Organization org = new Organization.Builder()
+                .setName(name)
+                .setAddress(address)
+                .setPhoneNumber(phoneNumber)
+                .setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .build();
+
+        addContacts.add(org);
+
+        System.out.println("The record added. \n");
+
+        return org;
+    }
 
     public static class Builder {
         private String name;
@@ -82,6 +116,83 @@ public class Organization extends Contact{
         public Organization build() {
             return new Organization(this);
         }
+    }
+
+    public Boolean search(String query) {
+        return this.name.toLowerCase().contains(query.toLowerCase())
+    || this.phoneNumber.toLowerCase().contains(query.toLowerCase());
+    }
+
+    public Contact edit(){
+
+        int recordNumber = 1;
+
+        if (addContacts.size() > 1){
+
+            System.out.println("Select a record: >");
+
+            String record = scanner.nextLine();
+
+            if (record.matches("[a-zA-Z]+")) {
+
+                System.out.println("No records to edit");
+                System.exit(0);
+            }
+
+            recordNumber = Integer.parseInt(record);
+
+        }
+
+        String tempName;
+        String tempNumber;
+        String tempAddress;
+        LocalDateTime tempCreatedAt;
+
+        Organization.Builder builderOrganization = new Organization.Builder();
+
+        tempName = this.getName();
+        tempNumber = this.getPhoneNumber();
+        tempAddress = this.getAddress();
+        tempCreatedAt = this.getCreatedAt();
+
+        System.out.println("Select a field (name, number, address): >");
+
+        String fieldName = scanner.nextLine();
+
+        builderOrganization
+                .setName(tempName)
+                .setAddress(tempAddress)
+                .setPhoneNumber(tempNumber)
+                .setCreatedAt(tempCreatedAt);
+
+        switch (fieldName) {
+
+            case "name":
+                System.out.println("Enter name: >");
+                tempName = scanner.nextLine();
+                builderOrganization.setName(tempName);
+                break;
+
+            case "number":
+                System.out.println("Enter number: >");
+                tempNumber = scanner.nextLine();
+                builderOrganization.setPhoneNumber(tempNumber);
+                break;
+            case "address":
+                System.out.println("Enter address: >");
+                tempAddress = scanner.nextLine();
+                builderOrganization.setAddress(tempAddress);
+                break;
+        }
+
+        Organization tempOrganization = builderOrganization
+                .setModifiedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))
+                .build();
+
+        System.out.println("\n");
+
+        return tempOrganization;
+
     }
 
     @Override

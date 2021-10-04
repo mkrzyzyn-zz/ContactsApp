@@ -1,6 +1,7 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public abstract class Contact {
 
@@ -10,6 +11,12 @@ public abstract class Contact {
     protected String description;
     protected LocalDateTime createdAt;
     protected LocalDateTime modifiedAt;
+
+    public abstract Contact add();
+
+    public abstract Contact edit();
+
+    public abstract Boolean search(String query);
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
