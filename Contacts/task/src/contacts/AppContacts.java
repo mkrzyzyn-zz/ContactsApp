@@ -10,56 +10,52 @@ public class AppContacts {
         ArrayList<Contact> searchContacts = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        public void Actions() {
+        public void actions() {
 
                 String action;
                 String type;
 
-                System.out.println("\n[menu] Enter action (add, list, search, count, exit): ");
+                while(true) {
 
-                action = scanner.nextLine();
+                        System.out.println("\n[menu] Enter action (add, edit, list, search, count, exit): ");
 
-                switch (action) {
+                        action = scanner.nextLine();
 
-                        case "add":
-                                System.out.println("Enter the type (person, organization): ");
-                                type = scanner.nextLine();
-                                if(type.equals("person")){
-                                       appContacts.add(new Person.Builder().build().add());
-                                }
-                                else if (type.equals("organization")){
-                                        appContacts.add(new Organization.Builder().build().add()) ;
-                                }
-                                Actions();
-                                break;
-                        case "list":
-                                list(appContacts);
-                                Actions();
-                                break;
-                        case "edit":
-                                edit();
-                                Actions();
-                                break;
-                        case "count":
-                                count();
-                                Actions();
-                                break;
-                        case "remove":
-                                remove();
-                                Actions();
-                                break;
-                        case "exit":
-                                System.exit(0);
-                                break;
-                        case "menu":
-                                System.out.println("\n");
-                                Actions();
-                                break;
-                        case "search":
-                                search();
-                                Actions();
-                                break;
+                        switch (action) {
 
+                                case "add":
+                                        System.out.println("Enter the type (person, organization): ");
+                                        type = scanner.nextLine();
+                                        if (type.equals("person")) {
+                                                appContacts.add(new Person.Builder().build().add());
+                                        } else if (type.equals("organization")) {
+                                                appContacts.add(new Organization.Builder().build().add());
+                                        }
+                                        break;
+                                case "list":
+                                        list(appContacts);
+                                        break;
+                                case "edit":
+                                        edit();
+                                        break;
+                                case "count":
+                                        count();
+                                        break;
+                                case "remove":
+                                        remove();
+                                        break;
+                                case "exit":
+                                        System.exit(0);
+                                        break;
+                                case "menu":
+                                        System.out.println("\n");
+                                        break;
+                                case "search":
+                                        search();
+                                        actions();
+                                        break;
+
+                        }
                 }
         }
 
@@ -105,14 +101,14 @@ public class AppContacts {
                                         remove();
                                         break;
                                 case "menu":
-                                        Actions();
+                                        actions();
 
                         }
 
                 } else if (action.equals("back")) {
-
+                        actions();
                 } else if (action.equals("again")){
-
+                        search();
                 } else System.out.println("\n");
 
                 }
